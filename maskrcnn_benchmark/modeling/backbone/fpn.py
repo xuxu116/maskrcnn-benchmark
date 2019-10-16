@@ -12,7 +12,7 @@ class FPN(nn.Module):
     """
 
     def __init__(
-        self, in_channels_list, out_channels, conv_block, top_blocks=None
+        self, cfg, in_channels_list, out_channels, conv_block, top_blocks=None
     ):
         """
         Arguments:
