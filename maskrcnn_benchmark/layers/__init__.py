@@ -3,6 +3,7 @@ import torch
 
 from .batch_norm import FrozenBatchNorm2d
 from .misc import Conv2d
+from .misc import Conv2d_dw
 from .misc import DFConv2d
 from .misc import ConvTranspose2d
 from .misc import BatchNorm2d
@@ -28,6 +29,7 @@ __all__ = [
     "ROIPool",
     "smooth_l1_loss",
     "Conv2d",
+    "Conv2d_dw",
     "DFConv2d",
     "ConvTranspose2d",
     "interpolate",

@@ -64,6 +64,24 @@ class ConvTranspose2d(torch.nn.ConvTranspose2d):
         return _NewEmptyTensorOp.apply(x, output_shape)
 
 
+class Conv2d_dw(nn.Module):
+
+    def __init__(self, in_channels, out_channels, **kwargs):
+        super(Conv2d_dw, self).__init__()
+
+        kernel_size = kwargs.get('kernel_size', 3)
+        stride = kwargs.get('stride', 1)
+        padding = kwargs.get('padding', 1)
+
+        self.conv_dw = nn.Conv2d(in_channels, in_channels, kernel_size=kernel_size, padding=padding, stride=stride, groups=in_channels, bias=False)
+        self.conv_pw = nn.Conv2d(in_channels, out_channels, kernel_size=1, padding=0, stride=1, bias=False)
+
+    def forward(self, x):
+        x = self.conv_dw(x)
+        x = self.conv_pw(x)
+        return x
+
+
 class BatchNorm2d(torch.nn.BatchNorm2d):
     def forward(self, x):
         if x.numel() > 0:

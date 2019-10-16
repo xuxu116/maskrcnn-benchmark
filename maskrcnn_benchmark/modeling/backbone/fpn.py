@@ -3,6 +3,7 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
+from maskrcnn_benchmark.layers import Conv2d_dw
 
 class FPN(nn.Module):
     """
@@ -24,6 +25,7 @@ class FPN(nn.Module):
                 FPN output, and the result will extend the result list
         """
         super(FPN, self).__init__()
+        self.cfg = cfg
         self.inner_blocks = []
         self.layer_blocks = []
         for idx, in_channels in enumerate(in_channels_list, 1):
@@ -33,12 +35,19 @@ class FPN(nn.Module):
             if in_channels == 0:
                 continue
             inner_block_module = conv_block(in_channels, out_channels, 1)
-            layer_block_module = conv_block(out_channels, out_channels, 3, 1)
+            if cfg.MODEL.FPN.DEPTHWISE:
+                layer_block_module = Conv2d_dw(out_channels, out_channels, kernel_size=3, stride=1)
+            else:
+                layer_block_module = conv_block(out_channels, out_channels, 3, 1)
+            #layer_block_module = conv_block(out_channels, out_channels, 3, 1)
             self.add_module(inner_block, inner_block_module)
             self.add_module(layer_block, layer_block_module)
             self.inner_blocks.append(inner_block)
             self.layer_blocks.append(layer_block)
         self.top_blocks = top_blocks
+        if self.cfg.MODEL.FPN.UP_CONV_TRANSPOSE:
+            self.upsample = nn.ConvTranspose2d(out_channels, out_channels, 2, 2)
+
 
     def forward(self, x):
         """
@@ -56,6 +65,11 @@ class FPN(nn.Module):
         ):
             if not inner_block:
                 continue
+            if self.cfg.MODEL.FPN.UP_CONV_TRANSPOSE:
+                inner_top_down = self.upsample(last_inner)
+            else:
+                inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
+
             inner_top_down = F.interpolate(last_inner, scale_factor=2, mode="nearest")
             inner_lateral = getattr(self, inner_block)(feature)
             # TODO use size instead of scale to make it robust to different sizes

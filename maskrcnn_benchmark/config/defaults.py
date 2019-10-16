@@ -107,7 +107,8 @@ _C.MODEL.BACKBONE.FREEZE_CONV_BODY_AT = 2
 _C.MODEL.FPN = CN()
 _C.MODEL.FPN.USE_GN = False
 _C.MODEL.FPN.USE_RELU = False
-
+_C.MODEL.FPN.UP_CONV_TRANSPOSE = False
+_C.MODEL.FPN.DEPTHWISE = False
 
 # ---------------------------------------------------------------------------- #
 # Group Norm options
