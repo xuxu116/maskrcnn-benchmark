@@ -286,6 +286,15 @@ _C.MODEL.RESNETS.STAGE_WITH_DCN = (False, False, False, False)
 _C.MODEL.RESNETS.WITH_MODULATED_DCN = False
 _C.MODEL.RESNETS.DEFORMABLE_GROUPS = 1
 
+# ----------------------------------------------------------------------------
+# #
+# MobileNet Options
+# ----------------------------------------------------------------------------
+# #
+_C.MODEL.MOBILENET = CN()
+_C.MODEL.MOBILENET.WIDTH_MULT = 1.0
+_C.MODEL.MOBILENET.LAST_CHANNELS = 1280
+_C.MODEL.MOBILENET.OUT_CHANNELS = 64
 
 # ---------------------------------------------------------------------------- #
 # RetinaNet Options (Follow the Detectron version)
@@ -347,6 +356,18 @@ _C.MODEL.RETINANET.INFERENCE_TH = 0.05
 # NMS threshold used in RetinaNet
 _C.MODEL.RETINANET.NMS_TH = 0.4
 
+# ----------------------------------------------------------------------------
+# FreeAnchor Options (Follow the Detectron version)
+# ----------------------------------------------------------------------------
+_C.FREEANCHOR = CN()
+_C.FREEANCHOR.FREEANCHOR_ON = False
+_C.FREEANCHOR.IOU_THRESHOLD = 0.3
+_C.FREEANCHOR.PRE_ANCHOR_TOPK = 200
+_C.FREEANCHOR.BBOX_REG_WEIGHT = 1.0
+_C.FREEANCHOR.BBOX_REG_BETA = 0.11
+_C.FREEANCHOR.BBOX_THRESHOLD = 0.5
+_C.FREEANCHOR.FOCAL_LOSS_ALPHA = 0.5
+_C.FREEANCHOR.FOCAL_LOSS_GAMMA = 2.0
 
 # ---------------------------------------------------------------------------- #
 # FBNet options

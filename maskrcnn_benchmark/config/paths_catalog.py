@@ -7,6 +7,22 @@ import os
 class DatasetCatalog(object):
     DATA_DIR = "datasets"
     DATASETS = {
+        "coco_2017_person_train": {
+            "img_dir": "coco/train2017",
+            "ann_file": "coco/annotations/person_detect_train2017.json"
+        },
+        "coco_2017_person_val": {
+            "img_dir": "coco/val2017",
+            "ann_file": "coco/annotations/person_detect_val2017.json"
+        },
+        "coco_2014_person_train": {
+            "img_dir": "coco/train2014",
+            "ann_file": "coco/annotations/person_detect_train2014.json"
+        },
+        "coco_2014_person_val": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/person_detect_val2014.json"
+        },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"
@@ -23,9 +39,17 @@ class DatasetCatalog(object):
             "img_dir": "coco/val2014",
             "ann_file": "coco/annotations/instances_val2014.json"
         },
+        "coco_2014_person_minival": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/person_detect_minival2014.json"
+        },
         "coco_2014_minival": {
             "img_dir": "coco/val2014",
             "ann_file": "coco/annotations/instances_minival2014.json"
+        },
+        "coco_2014_person_valminusminival": {
+            "img_dir": "coco/val2014",
+            "ann_file": "coco/annotations/person_detect_valminusminival2014.json"
         },
         "coco_2014_valminusminival": {
             "img_dir": "coco/val2014",

@@ -31,8 +31,15 @@ def build_dataset(dataset_list, transforms, dataset_catalog, is_train=True):
         )
     datasets = []
     for dataset_name in dataset_list:
-        data = dataset_catalog.get(dataset_name)
-        factory = getattr(D, data["factory"])
+        if 'json' in dataset_name:
+            factory = getattr(D, "COCODataset")
+            data = {}
+            data["factory"] = "COCODataset"
+            data["args"] = {"ann_file": dataset_name,
+                            "root": ""}
+        else:
+            data = dataset_catalog.get(dataset_name)
+            factory = getattr(D, data["factory"])
         args = data["args"]
         # for COCODataset, we want to remove images without annotations
         # during training
